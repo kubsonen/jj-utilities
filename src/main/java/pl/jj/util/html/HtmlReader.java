@@ -7,6 +7,8 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
@@ -29,14 +31,21 @@ public class HtmlReader {
 
     private String htmlFilePath;
     private File htmlFile;
+    private FileInputStream htmlFileInputStream;
 
-    public HtmlReader(String htmlFilePath) {
+    public HtmlReader(String htmlFilePath) throws FileNotFoundException {
         this.htmlFilePath = htmlFilePath;
         this.htmlFile = new File(this.htmlFilePath);
+        this.htmlFileInputStream = new FileInputStream(this.htmlFile);
     }
 
-    public HtmlReader(File htmlFile) {
+    public HtmlReader(File htmlFile) throws FileNotFoundException {
         this.htmlFile = htmlFile;
+        this.htmlFileInputStream = new FileInputStream(this.htmlFile);
+    }
+
+    public HtmlReader(FileInputStream htmlFileInputStream) {
+        this.htmlFileInputStream = htmlFileInputStream;
     }
 
     /**
