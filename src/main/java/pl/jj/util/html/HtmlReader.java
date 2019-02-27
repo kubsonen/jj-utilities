@@ -6,10 +6,7 @@ import org.xml.sax.SAXException;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
+import java.io.*;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -31,21 +28,21 @@ public class HtmlReader {
 
     private String htmlFilePath;
     private File htmlFile;
-    private FileInputStream htmlFileInputStream;
+    private InputStream htmlInputStream;
 
     public HtmlReader(String htmlFilePath) throws FileNotFoundException {
         this.htmlFilePath = htmlFilePath;
         this.htmlFile = new File(this.htmlFilePath);
-        this.htmlFileInputStream = new FileInputStream(this.htmlFile);
+        this.htmlInputStream = new FileInputStream(this.htmlFile);
     }
 
     public HtmlReader(File htmlFile) throws FileNotFoundException {
         this.htmlFile = htmlFile;
-        this.htmlFileInputStream = new FileInputStream(this.htmlFile);
+        this.htmlInputStream = new FileInputStream(this.htmlFile);
     }
 
-    public HtmlReader(FileInputStream htmlFileInputStream) {
-        this.htmlFileInputStream = htmlFileInputStream;
+    public HtmlReader(InputStream htmlFileInputStream) {
+        this.htmlInputStream = htmlFileInputStream;
     }
 
     /**
@@ -58,29 +55,22 @@ public class HtmlReader {
 
         try{
 
-            //Check the html file exists
-            if(htmlFile.exists()){
+            //Initialize builder instances
+            DocumentBuilderFactory builderFactory = DocumentBuilderFactory.newInstance();
+            DocumentBuilder builder = builderFactory.newDocumentBuilder();
 
-                //Initialize builder instances
-                DocumentBuilderFactory builderFactory = DocumentBuilderFactory.newInstance();
-                DocumentBuilder builder = builderFactory.newDocumentBuilder();
-
-                //Xml document
-                Document document = builder.parse(htmlFile);
-                document.getDocumentElement().normalize();
+            //Xml document
+            Document document = builder.parse(htmlInputStream);
+            document.getDocumentElement().normalize();
 
 
-                Node node = document.getDocumentElement();
-                HtmlModel htmlModel = buildModelFromNode(node);
+            Node node = document.getDocumentElement();
+            HtmlModel htmlModel = buildModelFromNode(node);
 
-                //Execute construct html model method
-                constructModelFromNode(htmlModel, node.getChildNodes());
+            //Execute construct html model method
+            constructModelFromNode(htmlModel, node.getChildNodes());
 
-                return htmlModel;
-
-            } else {
-                throw new HtmlReaderException(HtmlReaderException.FILE_NOT_EXISTS);
-            }
+            return htmlModel;
 
         } catch (ParserConfigurationException e) {
             throw new HtmlReaderException(e);
