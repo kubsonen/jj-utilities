@@ -20,6 +20,7 @@ public class HtmlReader {
     private static final String HTML_CLASS = "class";
     private static final String HTML_STYLE = "style";
     private static final String HTML_TEXT = "#text";
+    private static final String HTML_COMMENT = "#comment";
 
     private static final String SEMICOLON_SEPARATOR = ";";
     private static final String COLON_SEPARATOR = ":";
@@ -120,6 +121,8 @@ public class HtmlReader {
 
                 }
 
+            } else if(node.getNodeName().equals(HTML_COMMENT)){
+                //Do nothing
             } else {
 
                 //Html model from node
