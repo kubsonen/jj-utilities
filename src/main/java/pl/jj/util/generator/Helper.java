@@ -11,11 +11,7 @@ public class Helper {
 
     private static final Random random = new Random();
 
-    private Helper() throws ClassNotFoundException {
-        throw new ClassNotFoundException();
-    }
-
-
+    private Helper() throws ClassNotFoundException {}
 
     public static final Set<String> prepareRandomStrings(int elementsQuantity, int elLength){
         Set<String> strings = new HashSet<>();
