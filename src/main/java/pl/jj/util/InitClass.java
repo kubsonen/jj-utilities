@@ -7,11 +7,9 @@ import pl.jj.util.generator.RandomString;
 import pl.jj.util.html.HtmlModel;
 import pl.jj.util.html.HtmlReader;
 import pl.jj.util.html.HtmlReaderException;
+import pl.jj.util.web.WebDataGetter;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.InputStream;
+import java.io.*;
 import java.util.*;
 
 /**
@@ -25,6 +23,11 @@ public class InitClass {
     @Test
     public void generateRandomString(){
         System.out.println(RandomString.getRandomString());
+    }
+
+    @Test
+    public void testScanPage() throws IOException {
+        WebDataGetter.scanPage();
     }
 
     @Test
