@@ -20,8 +20,8 @@ public class Testing {
     }
 
     @Test
-    public void testScanPage() throws IOException {
-        WebDataGetter.scanPage(TestAutoData.urls);
+    public void testScanPage() {
+//        WebDataGetter.scanPage(TestAutoData.urls);
     }
 
     @Test
