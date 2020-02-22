@@ -6,10 +6,11 @@ import pl.jj.util.generator.RandomString;
 import pl.jj.util.html.HtmlModel;
 import pl.jj.util.html.HtmlReader;
 import pl.jj.util.html.HtmlReaderException;
-import pl.jj.util.web.TestAutoData;
-import pl.jj.util.web.WebDataGetter;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.util.*;
 
 public class Testing {
