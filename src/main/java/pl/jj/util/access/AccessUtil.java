@@ -1,7 +1,5 @@
 package pl.jj.util.access;
 
-import com.sun.istack.internal.NotNull;
-
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.HashMap;
@@ -29,7 +27,7 @@ public class AccessUtil {
         LONG_PAUSE = sb.toString();
     }
 
-    public AccessUtil(@NotNull Object accessObject) {
+    public AccessUtil(Object accessObject) {
         this.accessObject = accessObject;
         startAccess();
     }
