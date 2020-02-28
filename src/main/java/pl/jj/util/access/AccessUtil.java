@@ -68,7 +68,7 @@ public class AccessUtil {
 
         for (Field f : fields) {
 
-            Class<?> fieldClass = f.getDeclaringClass();
+            Class<?> fieldClass = f.getType();
             final String fieldName = f.getName();
             final String property;
             if (f.isAnnotationPresent(JField.class)) property = f.getAnnotation(JField.class).value();
@@ -83,6 +83,7 @@ public class AccessUtil {
             final String getterBooleanMethodName = GETTER_BOOL_PREFIX + fieldName.substring(0, 1).toUpperCase() + fieldName.substring(1);
 
             log("Field name: " + fieldName);
+            log("Field class: " + fieldClass.getName());
             log("Search setter: " + setterMethodName);
             log("Search getter: " + getterMethodName);
             log("Search boolean getter: " + getterBooleanMethodName);
@@ -90,6 +91,7 @@ public class AccessUtil {
             //Find getter boolean methods
             boolean foundBooleanGetter = false;
             if (fieldClass.equals(Boolean.class) || fieldClass.equals(boolean.class)) {
+                log("Field " + fieldName + " is boolean.");
                 for (Method m : methods) {
                     String mName = m.getName();
                     if (mName.equals(getterBooleanMethodName)) {

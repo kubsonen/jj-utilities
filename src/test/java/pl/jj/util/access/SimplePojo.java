@@ -8,6 +8,8 @@ public class SimplePojo {
     @JField("myLastName")
     private String lastName;
 
+    private Boolean pojo;
+
     public String getName() {
         return name;
     }
@@ -22,5 +24,13 @@ public class SimplePojo {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+
+    public Boolean isPojo() {
+        return pojo;
+    }
+
+    public void setPojo(Boolean pojo) {
+        this.pojo = pojo;
     }
 }
