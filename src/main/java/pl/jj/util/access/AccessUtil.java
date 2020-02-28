@@ -18,6 +18,7 @@ public class AccessUtil {
 
     private final Logger LOGGER = Logger.getLogger(getClass().getName());
     private final Object accessObject;
+    private Map<String, Class<?>> fieldClassMap;
     private Map<String, Method> getterMap;
     private Map<String, Method> setterMap;
 
@@ -30,6 +31,12 @@ public class AccessUtil {
     public AccessUtil(Object accessObject) {
         this.accessObject = accessObject;
         startAccess();
+    }
+
+    public Class<?> fieldClass(String property) {
+        if (fieldClassMap != null && fieldClassMap.containsKey(property))
+            return fieldClassMap.get(property);
+        return null;
     }
 
     public Method getter(String property) {
@@ -66,6 +73,10 @@ public class AccessUtil {
             final String property;
             if (f.isAnnotationPresent(JField.class)) property = f.getAnnotation(JField.class).value();
             else property = fieldName;
+
+            if (fieldClassMap == null)
+                fieldClassMap = new HashMap<>();
+            fieldClassMap.put(fieldName, fieldClass);
 
             final String setterMethodName = SETTER_PREFIX + fieldName.substring(0, 1).toUpperCase() + fieldName.substring(1);
             final String getterMethodName = GETTER_PREFIX + fieldName.substring(0, 1).toUpperCase() + fieldName.substring(1);
