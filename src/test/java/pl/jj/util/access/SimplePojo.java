@@ -1,5 +1,7 @@
 package pl.jj.util.access;
 
+import java.util.List;
+
 public class SimplePojo {
 
     @JField("myName")
@@ -7,6 +9,9 @@ public class SimplePojo {
 
     @JField("myLastName")
     private String lastName;
+
+    @JField("simplePojos")
+    private List<SimplePojo> sps;
 
     private Boolean pojo;
 
@@ -32,5 +37,13 @@ public class SimplePojo {
 
     public void setPojo(Boolean pojo) {
         this.pojo = pojo;
+    }
+
+    public List<SimplePojo> getSps() {
+        return sps;
+    }
+
+    public void setSps(List<SimplePojo> sps) {
+        this.sps = sps;
     }
 }

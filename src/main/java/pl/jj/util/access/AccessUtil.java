@@ -2,6 +2,9 @@ package pl.jj.util.access;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
@@ -18,6 +21,7 @@ public class AccessUtil {
 
     private final Logger LOGGER = Logger.getLogger(getClass().getName());
     private final Object accessObject;
+    private Map<String, Class<?>[]> fieldGenericMap;
     private Map<String, Class<?>> fieldClassMap;
     private Map<String, Method> getterMap;
     private Map<String, Method> setterMap;
@@ -31,6 +35,12 @@ public class AccessUtil {
     public AccessUtil(Object accessObject) {
         this.accessObject = accessObject;
         startAccess();
+    }
+
+    public Class<?>[] fieldGeneric(String property) {
+        if (fieldGenericMap != null && fieldGenericMap.containsKey(property))
+            return fieldGenericMap.get(property);
+        return null;
     }
 
     public Class<?> fieldClass(String property) {
@@ -77,6 +87,27 @@ public class AccessUtil {
             if (fieldClassMap == null)
                 fieldClassMap = new HashMap<>();
             fieldClassMap.put(fieldName, fieldClass);
+
+            //Field generic
+            Type type = f.getGenericType();
+            if (type instanceof ParameterizedType) {
+                log("Type for field " + fieldName + " is not null with class " + type.getClass().getName());
+                Type[] types = ((ParameterizedType) type).getActualTypeArguments();
+                if (types.length > 0) {
+                    if (fieldGenericMap == null)
+                        fieldGenericMap = new HashMap<>();
+
+                    Class<?>[] fieldGenericTypes = Arrays.stream(types)
+                            .filter(t -> t instanceof Class<?>)
+                            .map(t -> (Class<?>) t)
+                            .toArray(Class<?>[]::new);
+
+                    for (Class<?> aClass : fieldGenericTypes)
+                        log("Found type: " + aClass.getName());
+
+                    fieldGenericMap.put(fieldName, fieldGenericTypes);
+                }
+            }
 
             final String setterMethodName = SETTER_PREFIX + fieldName.substring(0, 1).toUpperCase() + fieldName.substring(1);
             final String getterMethodName = GETTER_PREFIX + fieldName.substring(0, 1).toUpperCase() + fieldName.substring(1);
