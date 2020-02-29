@@ -20,7 +20,7 @@ public class AccessUtil {
     private static final String GETTER_BOOL_PREFIX = "is";
 
     private final Logger LOGGER = Logger.getLogger(getClass().getName());
-    private final Object accessObject;
+    private final Class<?> accessObjectClass;
     private Map<String, Class<?>[]> fieldGenericMap;
     private Map<String, Class<?>> fieldClassMap;
     private Map<String, Method> getterMap;
@@ -33,7 +33,12 @@ public class AccessUtil {
     }
 
     public AccessUtil(Object accessObject) {
-        this.accessObject = accessObject;
+        this(accessObject.getClass());
+        startAccess();
+    }
+
+    public AccessUtil(Class<?> accessObjectClass) {
+        this.accessObjectClass = accessObjectClass;
         startAccess();
     }
 
@@ -72,9 +77,7 @@ public class AccessUtil {
     }
 
     private void startAccess() {
-        log("Start access for class: " + accessObject.getClass().getName());
-
-        Class<?> accessObjectClass = accessObject.getClass();
+        log("Start access for class: " + accessObjectClass.getName());
 
         Field[] fields = accessObjectClass.getDeclaredFields();
         log("Found fields: ");
