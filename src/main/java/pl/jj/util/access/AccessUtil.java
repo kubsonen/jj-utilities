@@ -37,6 +37,15 @@ public class AccessUtil {
         startAccess();
     }
 
+    public Accessible accessible(String property) {
+        return Accessible.accessible(
+                fieldGeneric(property),
+                fieldClass(property),
+                getter(property),
+                setter(property)
+        );
+    }
+
     public Class<?>[] fieldGeneric(String property) {
         if (fieldGenericMap != null && fieldGenericMap.containsKey(property))
             return fieldGenericMap.get(property);
