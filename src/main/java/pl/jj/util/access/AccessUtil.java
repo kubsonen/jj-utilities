@@ -39,6 +39,7 @@ public class AccessUtil {
 
     public Accessible accessible(String property) {
         return Accessible.accessible(
+                property,
                 fieldGeneric(property),
                 fieldClass(property),
                 getter(property),
