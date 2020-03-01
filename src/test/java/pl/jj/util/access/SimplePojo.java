@@ -2,7 +2,7 @@ package pl.jj.util.access;
 
 import java.util.List;
 
-public class SimplePojo {
+public class SimplePojo extends AbstractPojo {
 
     @JField("myName")
     private String name;
